@@ -1,0 +1,25 @@
+﻿@{ 
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "MegaDesk Home";
+
+    var width = 0;
+    var depth = 0;
+    var numDrawers = 0;
+    var surfaceMaterial = 0; // enum - TODO
+    var shippingSpeed = 0; // enum - TODO
+    string customerName;
+    decimal total = 0.00m;
+    var date = DateTime.Now;
+}
+
+<h1>Add Quote</h1>
+<form method="post">
+    <fieldset>
+        <legend>Order Desk Information</legend>
+        <p>
+            <label for="width">Width:</label>
+            <input type="number" name="width" value="@width" />
+            @* TODO: Validation *@
+        </p>
+    </fieldset>
+</form>
