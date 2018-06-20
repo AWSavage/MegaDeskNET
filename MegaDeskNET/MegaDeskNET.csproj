@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\megadesk.png" />
     <Content Include="Styles\MegaDesk.css" />
     <Content Include="Web.config" />
   </ItemGroup>
