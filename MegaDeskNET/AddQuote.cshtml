@@ -13,6 +13,100 @@
 
     // TODO: Validate input
 
+    // TODO: Modify following code to work with html
+    //void GetQuoteButton_Click(object sender, EventArgs e)
+    //{
+
+    //    Desk desk = new Desk
+    //    {
+    //        Width = (int)widthNumericUpDown.Value,
+    //        Depth = (int)depthNumericUpDown.Value,
+    //        NumberOfDrawers = (int)numberOfDrawersNumericUpDown.Value,
+    //        SurfaceMaterial = (Desk.DesktopSurfaceMaterial)surfaceMaterialSelectionComboBox.SelectedItem
+    //    };
+
+    //    DeskQuote deskQuote = new DeskQuote
+    //    {
+    //        Desk = desk,
+    //        CustomerName = customerNameTextBox.Text,
+    //        ShippingSpeed = GetRushShippingChoice(),
+    //        QuoteDate = DateTime.Now
+    //    };
+
+    //    totalPriceAmountLabel.Text = $@"${deskQuote.CalculateQuote()}";
+    //    shippingPriceLabel.Text = $@"${deskQuote.GetShippingPrice()}";
+
+    //    WriteQuoteToFile(deskQuote);
+
+    //    DisplayQuote();
+    //}
+
+    //private DeskQuote.RushShippingChoice GetRushShippingChoice()
+    //{
+    //    if (shippingSelectionComboBox.Text == DeskQuote.ShippingSpeeds[0])
+    //    {
+    //        return DeskQuote.RushShippingChoice.Rush3Days;
+    //    }
+    //    if (shippingSelectionComboBox.Text == DeskQuote.ShippingSpeeds[1])
+    //    {
+    //        return DeskQuote.RushShippingChoice.Rush5Days;
+    //    }
+    //    if (shippingSelectionComboBox.Text == DeskQuote.ShippingSpeeds[2])
+    //    {
+    //        return DeskQuote.RushShippingChoice.Rush7Days;
+    //    }
+
+    //    return DeskQuote.RushShippingChoice.Standard14Days;
+    //}
+
+    //private void DisplayQuote()
+    //{
+    //    // disable input fields
+    //    customerNameTextBox.Enabled = false;
+    //    widthNumericUpDown.Enabled = false;
+    //    depthNumericUpDown.Enabled = false;
+    //    numberOfDrawersNumericUpDown.Enabled = false;
+    //    surfaceMaterialSelectionComboBox.Enabled = false;
+    //    shippingSelectionComboBox.Enabled = false;
+
+    //    // display shipping price
+    //    shippingPriceTextLabel.Visible = true;
+    //    shippingPriceLabel.Visible = true;
+
+    //    // display total price
+    //    totalPriceLabel.Visible = true;
+    //    totalPriceAmountLabel.Visible = true;
+
+    //    // hide get quote button
+    //    getQuoteButton.Visible = false;
+
+    //    // change text of cancel button to "Main Menu"
+    //    cancelQuoteButton.Text = @"Main Menu";
+    //}
+
+    //private void WriteQuoteToFile(DeskQuote deskQuote)
+    //{
+    //    string quotesFile = @"quotes.json";
+    //    string quotes;
+
+    //    List<DeskQuote> deskQuotes = new List<DeskQuote>();
+    //    if (File.Exists(quotesFile))
+    //    {
+    //        using (StreamReader reader = new StreamReader(quotesFile))
+    //        {
+    //            quotes = reader.ReadToEnd();
+    //        }
+    //        deskQuotes = JsonConvert.DeserializeObject<List<DeskQuote>>(quotes);
+    //    }
+    //    deskQuotes.Add(deskQuote);
+    //    var convertedJson = JsonConvert.SerializeObject(deskQuotes, Formatting.Indented);
+
+    //    using (StreamWriter writer = new StreamWriter(quotesFile))
+    //    {
+    //        JsonSerializer serializer = new JsonSerializer();
+    //        serializer.Serialize(writer, deskQuotes);
+    //    }
+    //}
 }
 
 <h1>Add Quote</h1>
@@ -77,3 +171,6 @@
         <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
     </fieldset>
 </form>
+<p>
+    <a href="~/MegaDesk">Back to Main Menu</a>
+</p>
