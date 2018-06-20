@@ -1,12 +1,12 @@
-﻿@{ 
+﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "MegaDesk Home";
 
-    var width = 0;
-    var depth = 0;
+    var width = 24;
+    var depth = 12;
     var drawers = 0;
-    var surfaceMaterial = 0; // enum - TODO
-    var shippingSpeed = 0; // enum - TODO
+    var surfaceMaterial = ""; // enum - TODO
+    var shippingSpeed = ""; // enum - TODO
     string customerName;
     decimal total = 0.00m;
     var date = DateTime.Now;
@@ -16,6 +16,11 @@
 <form method="post">
     <fieldset>
         <legend>Order Desk Information</legend>
+        <p>
+            <label for="customerName">Name:</label>
+            <input type="text" name="customerName" />
+            @* TODO: Validation *@
+        </p>
         <p>
             <label for="width">Width:</label>
             <input type="number" name="width" value="@width" />
@@ -32,24 +37,33 @@
             @* TODO: Validation *@
         </p>
         <p>
-            @* TODO: Drop-down for surface materials*@
-            
+            <label for="surfaceMaterial">Surface Material:</label>
+            <select name="surfaceMaterial">
+                <option value="@surfaceMaterial" selected hidden>@surfaceMaterial</option>
+                <option value="laminate">Laminate</option>
+                <option value="oak">Oak</option>
+                <option value="rosewood">Rosewood</option>
+                <option value="veneer">Veneer</option>
+                <option value="pine">Pine</option>
+            </select>
             @* TODO: Validation *@
         </p>
         <p>
-            @* TODO: Drop-down for shipping speeds *@
-            @* TODO: Validation *@
+            <label for="shippingSpeed">Shipping Speed:</label>
+            <select name="shippingSpeed">
+                <option value="@shippingSpeed" selected hidden>@shippingSpeed</option>
+                <option value="3Day">Rush: 3 Days</option>
+                <option value="5Day">Rush: 5 Days</option>
+                <option value="7Day">Rush: 7 Days</option>
+                <option value="14Day">Standard: 14 Days</option>
+                @* TODO: Validation *@
         </p>
         <p>
-            <label for="customerName">Name:</label>
-            <input type="text" name="customerName" />
-            @* TODO: Validation *@
+            <label for="date">Date:</label>
+            @* TODO: date *@
         </p>
         <p>
-            @* date *@
-        </p>
-        <p>
-            @* total *@
+            @* TODO: total *@
         </p>
     </fieldset>
 </form>
