@@ -100,6 +100,7 @@
     <Content Include="MegaDesk.cshtml" />
     <Content Include="AddQuote.cshtml" />
     <Content Include="DeleteQuote.cshtml" />
+    <Content Include="EditQuote.cshtml" />
     <None Include="packages.config" />
     <Content Include="ViewQuotes.cshtml" />
     <None Include="Web.Debug.config">
