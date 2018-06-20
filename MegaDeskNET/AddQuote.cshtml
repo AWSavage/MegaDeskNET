@@ -4,7 +4,7 @@
 
     var width = 0;
     var depth = 0;
-    var numDrawers = 0;
+    var drawers = 0;
     var surfaceMaterial = 0; // enum - TODO
     var shippingSpeed = 0; // enum - TODO
     string customerName;
@@ -20,6 +20,36 @@
             <label for="width">Width:</label>
             <input type="number" name="width" value="@width" />
             @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="depth">Depth:</label>
+            <input type="number" name="depth" value="@depth" />
+            @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="drawers">Number of Drawers:</label>
+            <input type="number" name="drawers" value="@drawers" />
+            @* TODO: Validation *@
+        </p>
+        <p>
+            @* TODO: Drop-down for surface materials*@
+            
+            @* TODO: Validation *@
+        </p>
+        <p>
+            @* TODO: Drop-down for shipping speeds *@
+            @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="customerName">Name:</label>
+            <input type="text" name="customerName" />
+            @* TODO: Validation *@
+        </p>
+        <p>
+            @* date *@
+        </p>
+        <p>
+            @* total *@
         </p>
     </fieldset>
 </form>
