@@ -1,9 +1,75 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "MegaDesk Home";
 
-</body>
-</html>
+    var width = 24;
+    var depth = 12;
+    var drawers = 0;
+    var surfaceMaterial = ""; // enum - TODO
+    var shippingSpeed = ""; // enum - TODO
+    string customerName;
+    decimal total = 0.00m;
+    var date = DateTime.Now;
+}
+
+<h1>Edit Quote</h1>
+<form method="post">
+    <fieldset>
+        <legend>Order Desk Information</legend>
+        <p>
+            <label for="customerName">Name:</label>
+            <input type="text" name="customerName" />
+            @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="width">Width:</label>
+            <input type="number" name="width" value="@width" />
+            @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="depth">Depth:</label>
+            <input type="number" name="depth" value="@depth" />
+            @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="drawers">Number of Drawers:</label>
+            <input type="number" name="drawers" value="@drawers" />
+            @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="surfaceMaterial">Surface Material:</label>
+            <select name="surfaceMaterial">
+                <option value="@surfaceMaterial" selected hidden>@surfaceMaterial</option>
+                <option value="laminate">Laminate</option>
+                <option value="oak">Oak</option>
+                <option value="rosewood">Rosewood</option>
+                <option value="veneer">Veneer</option>
+                <option value="pine">Pine</option>
+            </select>
+            @* TODO: Validation *@
+        </p>
+        <p>
+            <label for="shippingSpeed">Shipping Speed:</label>
+            <select name="shippingSpeed">
+                <option value="@shippingSpeed" selected hidden>@shippingSpeed</option>
+                <option value="3Day">Rush: 3 Days</option>
+                <option value="5Day">Rush: 5 Days</option>
+                <option value="7Day">Rush: 7 Days</option>
+                <option value="14Day">Standard: 14 Days</option>
+                @* TODO: Validation *@
+            </select>
+        </p>
+        <p>
+            <label for="date">Date:</label>
+            <div id="date">@DateTime.Now</div>
+            @* TODO: date *@
+        </p>
+        <p>
+            <label for="total">Total:</label>
+            <div id="total"></div>
+            @* TODO: total *@
+        </p>
+        <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
+    </fieldset>
+    <p><a href="~/ViewQuotes.cshtml">Return to list of Quotes</a></p>
+</form>

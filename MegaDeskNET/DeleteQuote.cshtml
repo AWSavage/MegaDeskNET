@@ -48,3 +48,56 @@
         Response.Redirect("~/ViewQuotes");
     }
 }
+<h1>Delete a Quote</h1>
+@Html.ValidationSummary()
+<p><a href="~/ViewQuotes.cshtml">Return to list of Quotes</a></p>
+
+<form method="post">
+    <fieldset>
+        <legend>Quote Information</legend>
+
+        <p>
+            <span>Customer Name:</span>
+            <span>@customerName</span>
+        </p>
+
+        <p>
+            <span>Date:</span>
+            <span>@date</span>
+        </p>
+
+        <p>
+            <span>Total:</span>
+            <span>@total</span>
+        </p>
+
+        <p>
+            <span>Width:</span>
+            <span>@width</span>
+        </p>
+
+        <p>
+            <span>Depth:</span>
+            <span>@depth</span>
+        </p>
+
+        <p>
+            <span>Drawers:</span>
+            <span>@drawers</span>
+        </p>
+
+        <p>
+            <span>Surface Material:</span>
+            <span>@surfaceMaterial</span>
+        </p>
+
+        <p>
+            <span>Shipping Speed:</span>
+            <span>@shippingSpeed</span>
+        </p>
+
+        <input type="hidden" name="quoteId" value="@quoteId" />
+        <p><input type="submit" name="buttonDelete" value="Delete Quote" /></p>
+    </fieldset>
+    <p><a href="~/ViewQuotes.cshtml">Return to list of Quotes</a></p>
+</form>
