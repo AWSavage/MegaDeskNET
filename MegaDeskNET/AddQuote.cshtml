@@ -57,13 +57,18 @@
                 <option value="7Day">Rush: 7 Days</option>
                 <option value="14Day">Standard: 14 Days</option>
                 @* TODO: Validation *@
+            </select>
         </p>
         <p>
             <label for="date">Date:</label>
+            <div id="date">@DateTime.Now</div>
             @* TODO: date *@
         </p>
         <p>
+            <label for="total">Total:</label>
+            <div id="total"></div>
             @* TODO: total *@
         </p>
+        <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
     </fieldset>
 </form>
