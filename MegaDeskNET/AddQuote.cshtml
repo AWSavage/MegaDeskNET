@@ -1,15 +1,18 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = "MegaDesk Home";
+    Page.Title = "Add Quote";
 
     var width = 24;
     var depth = 12;
     var drawers = 0;
     var surfaceMaterial = ""; // enum - TODO
     var shippingSpeed = ""; // enum - TODO
-    string customerName;
-    decimal total = 0.00m;
-    var date = DateTime.Now;
+    var customerName = "";
+    var total = 0.00m;
+    var date = "";
+
+    // TODO: Validate input
+
 }
 
 <h1>Add Quote</h1>
@@ -18,7 +21,7 @@
         <legend>Order Desk Information</legend>
         <p>
             <label for="customerName">Name:</label>
-            <input type="text" name="customerName" />
+            <input type="text" name="customerName" value="@customerName" />
             @* TODO: Validation *@
         </p>
         <p>
@@ -40,6 +43,7 @@
             <label for="surfaceMaterial">Surface Material:</label>
             <select name="surfaceMaterial">
                 <option value="@surfaceMaterial" selected hidden>@surfaceMaterial</option>
+                <option value="" hidden disabled></option>
                 <option value="laminate">Laminate</option>
                 <option value="oak">Oak</option>
                 <option value="rosewood">Rosewood</option>
@@ -52,6 +56,7 @@
             <label for="shippingSpeed">Shipping Speed:</label>
             <select name="shippingSpeed">
                 <option value="@shippingSpeed" selected hidden>@shippingSpeed</option>
+                <option value="" hidden disabled></option>
                 <option value="3Day">Rush: 3 Days</option>
                 <option value="5Day">Rush: 5 Days</option>
                 <option value="7Day">Rush: 7 Days</option>
@@ -61,7 +66,7 @@
         </p>
         <p>
             <label for="date">Date:</label>
-            <div id="date">@DateTime.Now</div>
+            <div id="date">@date</div>
             @* TODO: date *@
         </p>
         <p>
