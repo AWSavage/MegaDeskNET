@@ -1,15 +1,112 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = "MegaDesk Home";
+    Page.Title = "Add Quote";
 
     var width = 24;
     var depth = 12;
     var drawers = 0;
     var surfaceMaterial = ""; // enum - TODO
     var shippingSpeed = ""; // enum - TODO
-    string customerName;
-    decimal total = 0.00m;
-    var date = DateTime.Now;
+    var customerName = "";
+    var total = 0.00m;
+    var date = "";
+
+    // TODO: Validate input
+
+    // TODO: Modify following code to work with html
+    //void GetQuoteButton_Click(object sender, EventArgs e)
+    //{
+
+    //    Desk desk = new Desk
+    //    {
+    //        Width = (int)widthNumericUpDown.Value,
+    //        Depth = (int)depthNumericUpDown.Value,
+    //        NumberOfDrawers = (int)numberOfDrawersNumericUpDown.Value,
+    //        SurfaceMaterial = (Desk.DesktopSurfaceMaterial)surfaceMaterialSelectionComboBox.SelectedItem
+    //    };
+
+    //    DeskQuote deskQuote = new DeskQuote
+    //    {
+    //        Desk = desk,
+    //        CustomerName = customerNameTextBox.Text,
+    //        ShippingSpeed = GetRushShippingChoice(),
+    //        QuoteDate = DateTime.Now
+    //    };
+
+    //    totalPriceAmountLabel.Text = $@"${deskQuote.CalculateQuote()}";
+    //    shippingPriceLabel.Text = $@"${deskQuote.GetShippingPrice()}";
+
+    //    WriteQuoteToFile(deskQuote);
+
+    //    DisplayQuote();
+    //}
+
+    //private DeskQuote.RushShippingChoice GetRushShippingChoice()
+    //{
+    //    if (shippingSelectionComboBox.Text == DeskQuote.ShippingSpeeds[0])
+    //    {
+    //        return DeskQuote.RushShippingChoice.Rush3Days;
+    //    }
+    //    if (shippingSelectionComboBox.Text == DeskQuote.ShippingSpeeds[1])
+    //    {
+    //        return DeskQuote.RushShippingChoice.Rush5Days;
+    //    }
+    //    if (shippingSelectionComboBox.Text == DeskQuote.ShippingSpeeds[2])
+    //    {
+    //        return DeskQuote.RushShippingChoice.Rush7Days;
+    //    }
+
+    //    return DeskQuote.RushShippingChoice.Standard14Days;
+    //}
+
+    //private void DisplayQuote()
+    //{
+    //    // disable input fields
+    //    customerNameTextBox.Enabled = false;
+    //    widthNumericUpDown.Enabled = false;
+    //    depthNumericUpDown.Enabled = false;
+    //    numberOfDrawersNumericUpDown.Enabled = false;
+    //    surfaceMaterialSelectionComboBox.Enabled = false;
+    //    shippingSelectionComboBox.Enabled = false;
+
+    //    // display shipping price
+    //    shippingPriceTextLabel.Visible = true;
+    //    shippingPriceLabel.Visible = true;
+
+    //    // display total price
+    //    totalPriceLabel.Visible = true;
+    //    totalPriceAmountLabel.Visible = true;
+
+    //    // hide get quote button
+    //    getQuoteButton.Visible = false;
+
+    //    // change text of cancel button to "Main Menu"
+    //    cancelQuoteButton.Text = @"Main Menu";
+    //}
+
+    //private void WriteQuoteToFile(DeskQuote deskQuote)
+    //{
+    //    string quotesFile = @"quotes.json";
+    //    string quotes;
+
+    //    List<DeskQuote> deskQuotes = new List<DeskQuote>();
+    //    if (File.Exists(quotesFile))
+    //    {
+    //        using (StreamReader reader = new StreamReader(quotesFile))
+    //        {
+    //            quotes = reader.ReadToEnd();
+    //        }
+    //        deskQuotes = JsonConvert.DeserializeObject<List<DeskQuote>>(quotes);
+    //    }
+    //    deskQuotes.Add(deskQuote);
+    //    var convertedJson = JsonConvert.SerializeObject(deskQuotes, Formatting.Indented);
+
+    //    using (StreamWriter writer = new StreamWriter(quotesFile))
+    //    {
+    //        JsonSerializer serializer = new JsonSerializer();
+    //        serializer.Serialize(writer, deskQuotes);
+    //    }
+    //}
 }
 
 <h1>Add Quote</h1>
@@ -18,7 +115,7 @@
         <legend>Order Desk Information</legend>
         <p>
             <label for="customerName">Name:</label>
-            <input type="text" name="customerName" />
+            <input type="text" name="customerName" value="@customerName" />
             @* TODO: Validation *@
         </p>
         <p>
@@ -40,6 +137,7 @@
             <label for="surfaceMaterial">Surface Material:</label>
             <select name="surfaceMaterial">
                 <option value="@surfaceMaterial" selected hidden>@surfaceMaterial</option>
+                <option value="" hidden disabled></option>
                 <option value="laminate">Laminate</option>
                 <option value="oak">Oak</option>
                 <option value="rosewood">Rosewood</option>
@@ -52,6 +150,7 @@
             <label for="shippingSpeed">Shipping Speed:</label>
             <select name="shippingSpeed">
                 <option value="@shippingSpeed" selected hidden>@shippingSpeed</option>
+                <option value="" hidden disabled></option>
                 <option value="3Day">Rush: 3 Days</option>
                 <option value="5Day">Rush: 5 Days</option>
                 <option value="7Day">Rush: 7 Days</option>
@@ -61,7 +160,7 @@
         </p>
         <p>
             <label for="date">Date:</label>
-            <div id="date">@DateTime.Now</div>
+            <div id="date">@date</div>
             @* TODO: date *@
         </p>
         <p>
@@ -72,3 +171,6 @@
         <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
     </fieldset>
 </form>
+<p>
+    <a href="~/MegaDesk">Back to Main Menu</a>
+</p>
