@@ -1,0 +1,50 @@
+﻿@{
+    var customerName = "";
+    var date = DateTime.Now;
+    var total = 0;
+    var width = 0;
+    var depth = 0;
+    var drawers = 0;
+    var surfaceMaterial = "";
+    var shippingSpeed = "";
+    var quoteId = "";
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            quoteId = Request.QueryString["ID"];
+            var db = Database.Open("QuoteDB");
+            var dbCommand = "SELECT * FROM Quotes WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, quoteId);
+            if (row != null)
+            {
+                customerName = row.CustomerName;
+                date = row.Date;
+                total = row.Total;
+                width = row.Width;
+                depth = row.Depth;
+                drawers = row.Drawers;
+                surfaceMaterial = row.SurfaceMateiral;
+                shippingSpeed = row.ShippingSpeed;
+            }
+            else
+            {
+                Validation.AddFormError("No Quote was found for that ID.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No Quote was found for that ID.");
+        }
+    }
+
+    if (IsPost && !Request["buttonDelete"].IsEmpty())
+    {
+        quoteId = Request.Form["scriptureId"];
+        var db = Database.Open("QuoteDB");
+        var deleteCommand = "DELETE FROM Quotes WHERE ID = @0";
+        db.Execute(deleteCommand, quoteId);
+        Response.Redirect("~/ViewQuotes");
+    }
+}

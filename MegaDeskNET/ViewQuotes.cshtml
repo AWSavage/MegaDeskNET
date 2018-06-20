@@ -1,5 +1,48 @@
 ﻿@{ 
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "MegaDesk Home";
 
+    var db = Database.Open("QuoteDB");
+    var selectCommand = "SELECT * FROM Quotes";
+    var searchTerm = "";
+
+    if (!Request.QueryString["searchCustomerName"].IsEmpty())
+    {
+        selectCommand = "SELECT * FROM Quotes WHERE CustomerName LIKE @0";
+        searchTerm = "%" + Request["searchCustomerName"] + "%";
+    }
+    var selectedData = db.Query(selectCommand, searchTerm);
+    var grid = new WebGrid(source: selectedData, defaultSort: "Date", rowsPerPage: 5);
 }
 
-<h1>View Quotes</h1>
+<h2>View Quotes</h2>
+<form method="get">
+    <div>
+        <label for="SearchCustomerName">Find Customer Name:</label>
+        <input type="text" name="searchCustomerName" value="@Request.QueryString["searchCustomerName"]" />
+        <input type="Submit" value="Search Customer Name" /><br />
+    </div>
+</form>
+
+<div>
+    @grid.GetHtml(
+        tableStyle: "grid",
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+            grid.Column(format: @<a href="~/EditQuote?id=@item.ID">Edit</a>),
+                                       grid.Column("Date"),
+                                       grid.Column("CustomerName"),
+                                       grid.Column("Total"),
+                                       grid.Column("Width"),
+                                       grid.Column("Depth"),
+                                       grid.Column("Drawers"),
+                                       grid.Column("SurfaceMaterial"),
+                                       grid.Column("ShippingSpeed"),
+                                       grid.Column(format: @<a href="~/DeleteQuote?id=@item.ID">Delete</a>)
+                                            )
+                                        )
+</div>
+<p>
+    <a href="~/MegaDesk">Back to Main Menu</a>
+</p>

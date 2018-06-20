@@ -99,6 +99,7 @@
   <ItemGroup>
     <Content Include="MegaDesk.cshtml" />
     <Content Include="AddQuote.cshtml" />
+    <Content Include="DeleteQuote.cshtml" />
     <None Include="packages.config" />
     <Content Include="ViewQuotes.cshtml" />
     <None Include="Web.Debug.config">
