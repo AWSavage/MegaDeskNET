@@ -2,14 +2,33 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Add Quote";
 
+    Validation.RequireField("customerName", "Please enter your name");
+    Validation.RequireField("width", "Please enter a valid width");
+    Validation.RequireField("depth", "Please enter a valid depth");
+    Validation.RequireField("drawers", "Please enter a valid number of drawers");
+    Validation.RequireField("surfaceMaterial", "Please select a surface material");
+    Validation.RequireField("shippingSpeed", "Pleaes select a shipping speed");
+
+    var customerName = "";
     var width = 24;
     var depth = 12;
     var drawers = 0;
     var surfaceMaterial = ""; // enum - TODO
     var shippingSpeed = ""; // enum - TODO
-    var customerName = "";
     var total = 0.00m;
     var date = "";
+
+    if (IsPost && Validation.IsValid())
+    {
+        customerName = Request.Form["customerName"];
+        width = Int32.Parse(Request.Form["width"]);
+        depth = Int32.Parse(Request.Form["depth"]);
+        drawers = Int32.Parse(Request.Form["drawers"]);
+        surfaceMaterial = Request.Form["surfaceMaterial"];
+        shippingSpeed = Request.Form["shippingSpeed"];
+        // TODO: total
+        date = DateTime.Now.ToLongDateString();
+    }
 
     // TODO: Validate input
 
@@ -135,6 +154,7 @@
         </p>
         <p>
             <label for="surfaceMaterial">Surface Material:</label>
+            @* TODO: @Html.DropDownList();*@
             <select name="surfaceMaterial">
                 <option value="@surfaceMaterial" selected hidden>@surfaceMaterial</option>
                 <option value="" hidden disabled></option>
