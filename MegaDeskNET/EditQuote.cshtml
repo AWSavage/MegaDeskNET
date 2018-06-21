@@ -5,13 +5,13 @@
     Page.Title = "Edit Quote";
 
     var customerName = "";
-    var width = "";
-    var depth = "";
-    var drawers = "";
+    var width = 0;
+    var depth = 0;
+    var drawers = 0;
     var surfaceMaterial = ""; // enum - TODO
     var shippingSpeed = ""; // enum - TODO
     var date = DateTime.Now;
-    var total = "";
+    var total = 0.00m;
     var quoteId = "";
 
 
@@ -54,23 +54,22 @@
         Validation.RequireField("drawers", "Drawers are required");
         Validation.RequireField("surfaceMaterial", "A surface material is required");
         Validation.RequireField("shippingSpeed", "A shipping speed is required");
-        Validation.RequireField("scriptureId", "No scripture ID was submitted!");
+        Validation.RequireField("quoteId", "No quote ID was submitted!");
 
         customerName = Request.Form["customerName"];
-        width = Request.Form["width"];
-        depth = Request.Form["depth"];
-        drawers = Request.Form["drawers"];
+        width = Int32.Parse(Request.Form["width"]);
+        depth = Int32.Parse(Request.Form["depth"]);
+        drawers = Int32.Parse(Request.Form["drawers"]);
         surfaceMaterial = Request.Form["surfaceMaterial"];
         shippingSpeed = Request.Form["shippingSpeed"];
-        total = Request.Form["total"];
-        //date = Request.Form["date"];
-        quoteId = Request.Form["scriptureId"];
+        total = Int32.Parse(Request.Form["total"]);
+        quoteId = Request.Form["quoteId"];
 
         if (Validation.IsValid())
         {
             var db = Database.Open("QuoteDB");
-            var updateCommand = "UPDATE Quotes SET CustomerName=@0, Width=@1, Depth=@2, Drawers=@3, SurfaceMaterial=@4, ShippingSpeed=@5, WHERE Id=@6";
-            db.Execute(updateCommand, customerName, width, depth, drawers, surfaceMaterial, shippingSpeed, quoteId);
+            var updateCommand = "UPDATE Quotes SET CustomerName=@0, Width=@1, Depth=@2, Drawers=@3, SurfaceMaterial=@4, ShippingSpeed=@5, Date=@6, Total=@7 WHERE Id=@8";
+            db.Execute(updateCommand, customerName, width, depth, drawers, surfaceMaterial, shippingSpeed, date, total, quoteId);
             Response.Redirect("~/ViewQuotes");
         }
     }
