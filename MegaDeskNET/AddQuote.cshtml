@@ -2,6 +2,13 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Add Quote";
 
+    Validation.RequireField("width", "You must enter a table width");
+    Validation.RequireField("depth", "You must enter a table depth");
+    Validation.RequireField("drawers", "You must enter an amount of drawers");
+    Validation.RequireField("surfaceMaterial", "You must choose a surface material");
+    Validation.RequireField("shippingSpeed", "You must choose a shipping speed");
+    Validation.RequireField("customerName", "You must enter a customer name");
+
     var width = 24;
     var depth = 12;
     var drawers = 0;
@@ -11,7 +18,22 @@
     var total = 0.00m;
     var date = "";
 
-    // TODO: Validate input
+    if (IsPost && Validation.IsValid())
+    {
+        width = Int32.Parse(Request.Form["width"]);
+        depth = Int32.Parse(Request.Form["depth"]);
+        drawers = Int32.Parse(Request.Form["drawers"]);
+        surfaceMaterial = Request.Form["surfaceMaterial"];
+        shippingSpeed = Request.Form["shippingSpeed"];
+        customerName = Request.Form["customerName"];
+
+
+        var db = Database.Open("QuoteDB");
+        var insertCommand = "INSERT INTO Quotes (Width, Depth, Drawers, SurfaceMaterial, ShippingSpeed, CustomerName, Date, Total) Values(@0, @1, @2, @3, @4, @5, @6, @7, @8)";
+        db.Execute(insertCommand, width, depth, drawers, surfaceMaterial, shippingSpeed, customerName, date, total);
+        Response.Redirect("~/Quotes");
+    }
+
 
     // TODO: Modify following code to work with html
     //void GetQuoteButton_Click(object sender, EventArgs e)
@@ -116,22 +138,18 @@
         <p>
             <label for="customerName">Name:</label>
             <input type="text" name="customerName" value="@customerName" />
-            @* TODO: Validation *@
         </p>
         <p>
             <label for="width">Width:</label>
-            <input type="number" name="width" value="@width" />
-            @* TODO: Validation *@
+            <input type="number" name="width" value="@width" min="24" max="96" />
         </p>
         <p>
             <label for="depth">Depth:</label>
-            <input type="number" name="depth" value="@depth" />
-            @* TODO: Validation *@
+            <input type="number" name="depth" value="@depth" min="12" max="48" />
         </p>
         <p>
             <label for="drawers">Number of Drawers:</label>
-            <input type="number" name="drawers" value="@drawers" />
-            @* TODO: Validation *@
+            <input type="number" name="drawers" value="@drawers" min="0" max="7"/>
         </p>
         <p>
             <label for="surfaceMaterial">Surface Material:</label>
@@ -144,7 +162,6 @@
                 <option value="veneer">Veneer</option>
                 <option value="pine">Pine</option>
             </select>
-            @* TODO: Validation *@
         </p>
         <p>
             <label for="shippingSpeed">Shipping Speed:</label>
@@ -155,18 +172,15 @@
                 <option value="5Day">Rush: 5 Days</option>
                 <option value="7Day">Rush: 7 Days</option>
                 <option value="14Day">Standard: 14 Days</option>
-                @* TODO: Validation *@
             </select>
         </p>
         <p>
             <label for="date">Date:</label>
             <div id="date">@date</div>
-            @* TODO: date *@
         </p>
         <p>
             <label for="total">Total:</label>
             <div id="total"></div>
-            @* TODO: total *@
         </p>
         <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
     </fieldset>

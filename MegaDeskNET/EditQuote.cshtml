@@ -2,7 +2,7 @@
     /**/
 
     Layout = "~/_Layout.cshtml";
-    Page.Title = "MegaDesk Home";
+    Page.Title = "Edit Quote";
 
     var customerName = "";
     var width = "";
@@ -83,22 +83,18 @@
         <p>
             <label for="customerName">Name:</label>
             <input type="text" name="customerName" value="@customerName"/>
-            @* TODO: Validation *@
         </p>
         <p>
             <label for="width">Width:</label>
-            <input type="number" name="width" value="@width" />
-            @* TODO: Validation *@
+            <input type="number" name="width" value="@width" min="24" max="96"/>
         </p>
         <p>
             <label for="depth">Depth:</label>
-            <input type="number" name="depth" value="@depth" />
-            @* TODO: Validation *@
+            <input type="number" name="depth" value="@depth" min="12" max="48"/>
         </p>
         <p>
             <label for="drawers">Number of Drawers:</label>
-            <input type="number" name="drawers" value="@drawers" />
-            @* TODO: Validation *@
+            <input type="number" name="drawers" value="@drawers" min="0" max="7"/>
         </p>
         <p>
             <label for="surfaceMaterial">Surface Material:</label>
@@ -110,7 +106,6 @@
                 <option value="veneer">Veneer</option>
                 <option value="pine">Pine</option>
             </select>
-            @* TODO: Validation *@
         </p>
         <p>
             <label for="shippingSpeed">Shipping Speed:</label>
@@ -120,18 +115,15 @@
                 <option value="5Day">Rush: 5 Days</option>
                 <option value="7Day">Rush: 7 Days</option>
                 <option value="14Day">Standard: 14 Days</option>
-                @* TODO: Validation *@
             </select>
         </p>
         <p>
             <label for="date">Date:</label>
             <div id="date">@DateTime.Now</div>
-            @* TODO: date *@
         </p>
         <p>
             <label for="total">Total:</label>
             <div id="total">@total</div>
-            @* TODO: total *@
         </p>
         <p><input type="submit" name="buttonSubmit" value="Add Quote" /></p>
     </fieldset>
