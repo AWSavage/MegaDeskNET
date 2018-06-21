@@ -2,15 +2,41 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Add Quote";
 
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Add Quote";
+
+    Validation.RequireField("width", "You must enter a table width");
+    Validation.RequireField("depth", "You must enter a table depth");
+    Validation.RequireField("drawers", "You must enter an amount of drawers");
+    Validation.RequireField("surfaceMaterial", "You must choose a surface material");
+    Validation.RequireField("shippingSpeed", "You must choose a shipping speed");
+    Validation.RequireField("customerName", "You must enter a customer name");
+
     var width = 24;
     var depth = 12;
     var drawers = 0;
     var surfaceMaterial = ""; // enum - TODO
     var shippingSpeed = ""; // enum - TODO
+    var customerName = "";
     var total = 0.00m;
     var date = "";
 
-    // TODO: Validate input
+    if (IsPost && Validation.IsValid())
+    {
+        width = Int32.Parse(Request.Form["width"]);
+        depth = Int32.Parse(Request.Form["depth"]);
+        drawers = Int32.Parse(Request.Form["drawers"]);
+        surfaceMaterial = Request.Form["surfaceMaterial"];
+        shippingSpeed = Request.Form["shippingSpeed"];
+        customerName = Request.Form["customerName"];
+
+
+        var db = Database.Open("QuoteDB");
+        var insertCommand = "INSERT INTO Quotes (Width, Depth, Drawers, SurfaceMaterial, ShippingSpeed, CustomerName, Date, Total) Values(@0, @1, @2, @3, @4, @5, @6, @7, @8)";
+        db.Execute(insertCommand, width, depth, drawers, surfaceMaterial, shippingSpeed, customerName, date, total);
+        Response.Redirect("~/Quotes");
+    }
+
 
     // TODO: Modify following code to work with html
     //void GetQuoteButton_Click(object sender, EventArgs e)
