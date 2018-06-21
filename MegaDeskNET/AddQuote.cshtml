@@ -2,6 +2,9 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Add Quote";
 
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Add Quote";
+
     Validation.RequireField("width", "You must enter a table width");
     Validation.RequireField("depth", "You must enter a table depth");
     Validation.RequireField("drawers", "You must enter an amount of drawers");
@@ -16,7 +19,7 @@
     var shippingSpeed = ""; // enum - TODO
     var customerName = "";
     var total = 0.00m;
-    var date = DateTime.Now;
+    var date = "";
 
     if (IsPost && Validation.IsValid())
     {
@@ -149,7 +152,7 @@
         </p>
         <p>
             <label for="drawers">Number of Drawers:</label>
-            <input type="number" name="drawers" value="@drawers" min="0" max="7" />
+            <input type="number" name="drawers" value="@drawers" min="0" max="7"/>
         </p>
         <p>
             <label for="surfaceMaterial">Surface Material:</label>
