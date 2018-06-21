@@ -1,15 +1,76 @@
 ﻿@{
+    /**/
+
     Layout = "~/_Layout.cshtml";
     Page.Title = "MegaDesk Home";
 
-    var width = 24;
-    var depth = 12;
-    var drawers = 0;
+    var customerName = "";
+    var width = "";
+    var depth = "";
+    var drawers = "";
     var surfaceMaterial = ""; // enum - TODO
     var shippingSpeed = ""; // enum - TODO
-    string customerName;
-    decimal total = 0.00m;
     var date = DateTime.Now;
+    var quoteId = "";
+
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            quoteId = Request.QueryString["ID"];
+            var db = Database.Open("QuoteDB");
+            var dbCommand = "SELECT * FROM Quotes WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, quoteId);
+
+            if (row != null)
+            {
+                customerName = row.CustomerName;
+                date = row.Date;
+                width = row.Width.ToString();
+                depth = row.Depth.ToString();
+                drawers = row.Drawers.ToString();
+                surfaceMaterial = row.SurfaceMaterial;
+                shippingSpeed = row.ShippingSpeed;
+            }
+            else
+            {
+                Validation.AddFormError("No quote was selected.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No quote was selected.");
+        }
+    }
+
+    if (IsPost)
+    {
+        Validation.RequireField("customerName", "You must enter a customer name");
+        Validation.RequireField("width", "Width is required");
+        Validation.RequireField("depth", "Depth is required");
+        Validation.RequireField("drawers", "Drawers are required");
+        Validation.RequireField("surfaceMaterial", "A surface material is required");
+        Validation.RequireField("shippingSpeed", "A shipping speed is required");
+        Validation.RequireField("scriptureId", "No scripture ID was submitted!");
+
+        customerName = Request.Form["customerName"];
+        width = Request.Form["width"];
+        depth = Request.Form["depth"];
+        drawers = Request.Form["drawers"];
+        surfaceMaterial = Request.Form["surfaceMaterial"];
+        shippingSpeed = Request.Form["shippingSpeed"];
+        //date = Request.Form["date"];
+        quoteId = Request.Form["scriptureId"];
+
+        if (Validation.IsValid())
+        {
+            var db = Database.Open("QuoteDB");
+            var updateCommand = "UPDATE Quotes SET CustomerName=@0, Width=@1, Depth=@2, Drawers=@3, SurfaceMaterial=@4, ShippingSpeed=@5, WHERE Id=@6";
+            db.Execute(updateCommand, customerName, width, depth, drawers, surfaceMaterial, shippingSpeed, quoteId);
+            Response.Redirect("~/ViewQuotes");
+        }
+    }
 }
 
 <h1>Edit Quote</h1>

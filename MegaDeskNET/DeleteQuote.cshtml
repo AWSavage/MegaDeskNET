@@ -1,4 +1,7 @@
 ﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "MegaDesk Home";
+
     var customerName = "";
     var date = DateTime.Now;
     var total = "";
@@ -25,7 +28,7 @@
                 width = row.Width.ToString();
                 depth = row.Depth.ToString();
                 drawers = row.Drawers.ToString();
-                surfaceMaterial = row.SurfaceMateiral;
+                surfaceMaterial = row.SurfaceMaterial;
                 shippingSpeed = row.ShippingSpeed;
             }
             else
@@ -41,7 +44,7 @@
 
     if (IsPost && !Request["buttonDelete"].IsEmpty())
     {
-        quoteId = Request.Form["scriptureId"];
+        quoteId = Request.Form["quoteId"];
         var db = Database.Open("QuoteDB");
         var deleteCommand = "DELETE FROM Quotes WHERE ID = @0";
         db.Execute(deleteCommand, quoteId);
