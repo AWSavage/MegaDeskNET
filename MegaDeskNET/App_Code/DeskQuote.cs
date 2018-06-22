@@ -64,39 +64,39 @@ namespace MegaDesk
             var totalPrice = BasePrice;
             totalPrice += CalculateSurfaceAreaPrice();
             totalPrice += CalculatePriceOfDrawers();
-            totalPrice += GetSurfaceMaterialPrice();
-            totalPrice += GetShippingPrice();
+            //totalPrice += GetSurfaceMaterialPrice();
+            //totalPrice += GetShippingPrice();
 
             Total = totalPrice;
 
             return totalPrice;
         }
 
-        private decimal GetSurfaceMaterialPrice()
-        {
-            var surfaceMaterialPrice = 0.00M;
+        //private decimal GetSurfaceMaterialPrice()
+        //{
+        //    var surfaceMaterialPrice = 0.00M;
 
-            switch (Desk.SurfaceMaterial)
-            {
-                case Desk.DesktopSurfaceMaterial.Laminate:
-                    surfaceMaterialPrice = SurfaceMaterialPriceLaminate;
-                    break;
-                case Desk.DesktopSurfaceMaterial.Oak:
-                    surfaceMaterialPrice = SurfaceMaterialPriceOak;
-                    break;
-                case Desk.DesktopSurfaceMaterial.Pine:
-                    surfaceMaterialPrice = SurfaceMaterialPricePine;
-                    break;
-                case Desk.DesktopSurfaceMaterial.Rosewood:
-                    surfaceMaterialPrice = SurfaceMaterialPriceRosewood;
-                    break;
-                case Desk.DesktopSurfaceMaterial.Veneer:
-                    surfaceMaterialPrice = SurfaceMaterialPriceVeneer;
-                    break;
-            }
+        //    switch (Desk.SurfaceMaterial)
+        //    {
+        //        case Desk.DesktopSurfaceMaterial.Laminate:
+        //            surfaceMaterialPrice = SurfaceMaterialPriceLaminate;
+        //            break;
+        //        case Desk.DesktopSurfaceMaterial.Oak:
+        //            surfaceMaterialPrice = SurfaceMaterialPriceOak;
+        //            break;
+        //        case Desk.DesktopSurfaceMaterial.Pine:
+        //            surfaceMaterialPrice = SurfaceMaterialPricePine;
+        //            break;
+        //        case Desk.DesktopSurfaceMaterial.Rosewood:
+        //            surfaceMaterialPrice = SurfaceMaterialPriceRosewood;
+        //            break;
+        //        case Desk.DesktopSurfaceMaterial.Veneer:
+        //            surfaceMaterialPrice = SurfaceMaterialPriceVeneer;
+        //            break;
+        //    }
 
-            return surfaceMaterialPrice;
-        }
+        //    return surfaceMaterialPrice;
+        //}
 
         private decimal CalculatePriceOfDrawers()
         {
@@ -113,40 +113,40 @@ namespace MegaDesk
             return 0.00M; // price if surface area <= 1000
         }
 
-        public decimal GetShippingPrice()
-        {
-            decimal shippingPrice = 0.00M;
+        //public decimal GetShippingPrice()
+        //{
+        //    decimal shippingPrice = 0.00M;
 
-            // check desk size
-            var deskSize = GetDeskSizeIndex();
+        //    // check desk size
+        //    var deskSize = GetDeskSizeIndex();
 
-            int[,] ShipTable = readTxtToArray();
+        //    int[,] ShipTable = readTxtToArray();
 
-            // check shipping speed
-            switch (ShippingSpeed)
-            {
-                case RushShippingChoice.Rush3Days:
-                    if (deskSize < 1000) { shippingPrice = ShipTable[0, 0]; }
-                    else if (deskSize >= 1000 && deskSize < 2001) { shippingPrice = ShipTable[0, 1]; }
-                    else { shippingPrice = ShipTable[0, 2]; }
-                    break;
-                case RushShippingChoice.Rush5Days:
-                    if (deskSize < 1000) { shippingPrice = ShipTable[1, 0]; }
-                    else if (deskSize >= 1000 && deskSize < 2001) { shippingPrice = ShipTable[1, 1]; }
-                    else { shippingPrice = ShipTable[1, 2]; }
-                    break;
-                case RushShippingChoice.Rush7Days:
-                    if (deskSize < 1000) { shippingPrice = ShipTable[2, 0]; }
-                    else if (deskSize >= 1000 && deskSize < 2001) { shippingPrice = ShipTable[2, 1]; }
-                    else { shippingPrice = ShipTable[2, 2]; }
-                    break;
-                case RushShippingChoice.Standard14Days:
-                    shippingPrice = ShippingPriceStandard;
-                    break;
-            }
+        //    // check shipping speed
+        //    switch (ShippingSpeed)
+        //    {
+        //        case RushShippingChoice.Rush3Days:
+        //            if (deskSize < 1000) { shippingPrice = ShipTable[0, 0]; }
+        //            else if (deskSize >= 1000 && deskSize < 2001) { shippingPrice = ShipTable[0, 1]; }
+        //            else { shippingPrice = ShipTable[0, 2]; }
+        //            break;
+        //        case RushShippingChoice.Rush5Days:
+        //            if (deskSize < 1000) { shippingPrice = ShipTable[1, 0]; }
+        //            else if (deskSize >= 1000 && deskSize < 2001) { shippingPrice = ShipTable[1, 1]; }
+        //            else { shippingPrice = ShipTable[1, 2]; }
+        //            break;
+        //        case RushShippingChoice.Rush7Days:
+        //            if (deskSize < 1000) { shippingPrice = ShipTable[2, 0]; }
+        //            else if (deskSize >= 1000 && deskSize < 2001) { shippingPrice = ShipTable[2, 1]; }
+        //            else { shippingPrice = ShipTable[2, 2]; }
+        //            break;
+        //        case RushShippingChoice.Standard14Days:
+        //            shippingPrice = ShippingPriceStandard;
+        //            break;
+        //    }
 
-            return shippingPrice;
-        }
+        //    return shippingPrice;
+        //}
 
 
         private int CalculateSurfaceArea()

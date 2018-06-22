@@ -16,6 +16,5 @@
         public int Drawers { get; set; }
         //public DesktopSurfaceMaterial SurfaceMaterial { get; set; }
         public string SurfaceMaterial { get; set; }
-
     }
 }
