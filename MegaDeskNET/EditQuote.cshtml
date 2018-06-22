@@ -1,4 +1,5 @@
-﻿@{
+﻿@using MegaDesk;
+@{
     /**/
 
     Layout = "~/_Layout.cshtml";
@@ -56,20 +57,39 @@
         Validation.RequireField("shippingSpeed", "A shipping speed is required");
         Validation.RequireField("quoteId", "No quote ID was submitted!");
 
-        customerName = Request.Form["customerName"];
-        width = Int32.Parse(Request.Form["width"]);
-        depth = Int32.Parse(Request.Form["depth"]);
-        drawers = Int32.Parse(Request.Form["drawers"]);
-        surfaceMaterial = Request.Form["surfaceMaterial"];
-        shippingSpeed = Request.Form["shippingSpeed"];
-        total = Int32.Parse(Request.Form["total"]);
-        quoteId = Request.Form["quoteId"];
+        Desk desk = new Desk
+        {
+            Width = Int32.Parse(Request.Form["width"]),
+            Depth = Int32.Parse(Request.Form["depth"]),
+            Drawers = Int32.Parse(Request.Form["drawers"]),
+            SurfaceMaterial = Request.Form["surfaceMaterial"]
+        };
+
+        DeskQuote deskQuote = new DeskQuote
+        {
+            Desk = desk,
+            CustomerName = Request.Form["customerName"],
+            ShippingSpeed = Request.Form["shippingSpeed"],
+            QuoteDate = DateTime.Now,
+        };
 
         if (Validation.IsValid())
         {
             var db = Database.Open("QuoteDB");
-            var updateCommand = "UPDATE Quotes SET CustomerName=@0, Width=@1, Depth=@2, Drawers=@3, SurfaceMaterial=@4, ShippingSpeed=@5, Date=@6, Total=@7 WHERE Id=@8";
-            db.Execute(updateCommand, customerName, width, depth, drawers, surfaceMaterial, shippingSpeed, date, total, quoteId);
+            // get surface material id
+            var dbCommand = "SELECT Id FROM SurfaceMaterial WHERE Material = @0";
+            var SurfaceMaterialId = db.QueryValue(dbCommand, desk.SurfaceMaterial);
+            /* Insert into Desk database */
+            // insert desk
+            var insertCommand = "INSERT INTO Desk (Width, Depth, Drawers, SurfaceMaterialId) Values(@0, @1, @2, @3)";
+            db.Execute(insertCommand, desk.Width, desk.Depth, desk.Drawers, SurfaceMaterialId);
+            /* Insert into Quotes database */
+            // get desk id
+            dbCommand = "SELECT Id FROM Desk WHERE SurfaceMaterialId = @0 AND Width = @1 AND Depth = @2 AND Drawers = @3";
+            var DeskId = db.QueryValue(dbCommand, SurfaceMaterialId, desk.Width, desk.Depth, desk.Drawers);
+            // insert quote
+            insertCommand = "INSERT INTO Quotes (ShippingSpeed, CustomerName, Date, Total, DeskId) Values(@0, @1, @2, @3, @4)";
+            db.Execute(insertCommand, deskQuote.ShippingSpeed, deskQuote.CustomerName, DateTime.Now, deskQuote.CalculateQuote(), DeskId);
             Response.Redirect("~/ViewQuotes");
         }
     }
