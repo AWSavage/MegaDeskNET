@@ -38,9 +38,10 @@
             CustomerName = Request.Form["customerName"],
             ShippingSpeed = Request.Form["shippingSpeed"],
             QuoteDate = DateTime.Now,
-            // TODO: Total
-            Total = 0.00m
+            // TODO: Total  
         };
+
+
 
         var db = Database.Open("QuoteDB");
         // get surface material id
@@ -56,7 +57,7 @@
         var DeskId = db.QueryValue(dbCommand, SurfaceMaterialId, desk.Width, desk.Depth, desk.Drawers);
         // insert quote
         insertCommand = "INSERT INTO Quotes (ShippingSpeed, CustomerName, Date, Total, DeskId) Values(@0, @1, @2, @3, @4)";
-        db.Execute(insertCommand, deskQuote.ShippingSpeed, deskQuote.CustomerName, DateTime.Now, deskQuote.Total, DeskId);
+        db.Execute(insertCommand, deskQuote.ShippingSpeed, deskQuote.CustomerName, DateTime.Now, deskQuote.CalculateQuote(), DeskId);
         Response.Redirect("~/MegaDesk");
     }
 }
