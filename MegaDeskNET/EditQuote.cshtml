@@ -58,6 +58,8 @@
         Validation.RequireField("shippingSpeed", "A shipping speed is required");
         Validation.RequireField("quoteId", "No quote ID was submitted!");
 
+        quoteId = Request.QueryString["ID"];
+
         Desk desk = new Desk
         {
             Width = Int32.Parse(Request.Form["width"]),
@@ -79,24 +81,32 @@
             var db = Database.Open("QuoteDB");
             // get surface material id
             var dbCommand = "SELECT Id FROM SurfaceMaterial WHERE Material = @0";
-            var SurfaceMaterialId = db.QueryValue(dbCommand, desk.SurfaceMaterial);
-            /* Insert into Desk database */
-            // insert desk
-            var insertCommand = "INSERT INTO Desk (Width, Depth, Drawers, SurfaceMaterialId) Values(@0, @1, @2, @3)";
-            db.Execute(insertCommand, desk.Width, desk.Depth, desk.Drawers, SurfaceMaterialId);
-            /* Insert into Quotes database */
+            var surfaceMaterialId = db.QueryValue(dbCommand, desk.SurfaceMaterial);
+            /* Find desk id in Desk database */
+            // check if edited desk specification already exists
+            dbCommand = "SELECT Id FROM Desk WHERE SurfaceMaterialId = @0 AND Width = @1 AND Depth = @2 AND Drawers = @3";
+            var result = db.QueryValue(dbCommand, surfaceMaterialId, desk.Width, desk.Depth, desk.Drawers);
+            var insertCommand = "";
+            if (result == null)
+            {
+                // insert a new desk spec
+                insertCommand = "INSERT INTO Desk (Width, Depth, Drawers, SurfaceMaterialId) Values(@0, @1, @2, @3)";
+                db.Execute(insertCommand, desk.Width, desk.Depth, desk.Drawers, surfaceMaterialId);
+            }
             // get desk id
             dbCommand = "SELECT Id FROM Desk WHERE SurfaceMaterialId = @0 AND Width = @1 AND Depth = @2 AND Drawers = @3";
-            var DeskId = db.QueryValue(dbCommand, SurfaceMaterialId, desk.Width, desk.Depth, desk.Drawers);
-            // insert quote
-            insertCommand = "INSERT INTO Quotes (ShippingSpeed, CustomerName, Date, Total, DeskId) Values(@0, @1, @2, @3, @4)";
-            db.Execute(insertCommand, deskQuote.ShippingSpeed, deskQuote.CustomerName, DateTime.Now, deskQuote.CalculateQuote(), DeskId);
+            var deskId = db.QueryValue(dbCommand, surfaceMaterialId, desk.Width, desk.Depth, desk.Drawers);
+            /* Update quote in Quotes database */
+            // update quote
+            var updateCommand = "UPDATE Quotes SET ShippingSpeed = @0, CustomerName = @1, Date = @2, Total = @3, DeskId = @4 WHERE Id = @5";
+            db.Execute(updateCommand, deskQuote.ShippingSpeed, deskQuote.CustomerName, DateTime.Now, deskQuote.CalculateQuote(), deskId, Int32.Parse(quoteId));
             Response.Redirect("~/ViewQuotes");
         }
     }
 }
 
 <h1>Edit Quote</h1>
+@Html.ValidationSummary()
 <form method="post">
     <fieldset>
         <legend>Order Desk Information</legend>
@@ -131,10 +141,10 @@
             <label for="shippingSpeed">Shipping Speed:</label>
             <select name="shippingSpeed">
                 <option value="@shippingSpeed" selected hidden>@shippingSpeed</option>
-                <option value="3Day">Rush: 3 Days</option>
-                <option value="5Day">Rush: 5 Days</option>
-                <option value="7Day">Rush: 7 Days</option>
-                <option value="14Day">Standard: 14 Days</option>
+                <option value="Rush: 3 Days">Rush: 3 Days</option>
+                <option value="Rush: 5 Days">Rush: 5 Days</option>
+                <option value="Rush: 7 Days">Rush: 7 Days</option>
+                <option value="Standard: 14 Days">Standard: 14 Days</option>
             </select>
         </p>
         <p>
@@ -144,6 +154,9 @@
         <p>
             <label for="total">Total:</label>
             <div id="total">@total</div>
+        </p>
+        <p>
+            <input type="hidden" name="quoteId" value="@quoteId" />
         </p>
         <p><input type="submit" name="buttonSubmit" value="Save Quote" /></p>
     </fieldset>

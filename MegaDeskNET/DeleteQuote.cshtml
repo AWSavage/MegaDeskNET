@@ -18,7 +18,10 @@
         {
             quoteId = Request.QueryString["ID"];
             var db = Database.Open("QuoteDB");
-            var dbCommand = "SELECT * FROM Quotes WHERE ID = @0";
+            var dbCommand = "SELECT [q].[Id], [q].[Date], [q].[CustomerName], [q].[Total], [d].[Width], [d].[Depth], [d].[Drawers], [sf].[Material] AS SurfaceMaterial, [q].[ShippingSpeed]" +
+                            "FROM [Quotes] [q] JOIN [Desk] [d] ON [d].[Id] = [q].[DeskId]" +
+                            "JOIN [SurfaceMaterial] [sf] ON [sf].[Id] = [d].[SurfaceMaterialId]" +
+                            "WHERE [q].[Id] = @0";
             var row = db.QuerySingle(dbCommand, quoteId);
             if (row != null)
             {
