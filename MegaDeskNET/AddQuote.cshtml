@@ -40,8 +40,6 @@
             QuoteDate = DateTime.Now, 
         };
 
-
-
         var db = Database.Open("QuoteDB");
         // get surface material id
         var dbCommand = "SELECT Id FROM SurfaceMaterial WHERE Material = @0";
