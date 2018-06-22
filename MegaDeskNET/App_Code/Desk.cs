@@ -1,6 +1,6 @@
-﻿namespace MegaDesk
+﻿namespace MegaDeskNET
 {
-    struct Desk
+    public class Desk
     {
         public enum DesktopSurfaceMaterial
         {

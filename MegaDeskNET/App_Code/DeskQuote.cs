@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace MegaDesk
+namespace MegaDeskNET
 {
-    class DeskQuote
+    public class DeskQuote
     {
         public int[,] readTxtToArray()
         {
