@@ -8,8 +8,8 @@
     var width = 0;
     var depth = 0;
     var drawers = 0;
-    var surfaceMaterial = ""; // enum - TODO
-    var shippingSpeed = ""; // enum - TODO
+    var surfaceMaterial = "";
+    var shippingSpeed = "";
     var date = DateTime.Now;
     var total = 0.00m;
     var quoteId = "";
@@ -28,12 +28,12 @@
             {
                 customerName = row.CustomerName;
                 date = row.Date;
-                width = row.Width.ToString();
-                depth = row.Depth.ToString();
-                drawers = row.Drawers.ToString();
+                width = row.Width;
+                depth = row.Depth;
+                drawers = row.Drawers;
                 surfaceMaterial = row.SurfaceMaterial;
                 shippingSpeed = row.ShippingSpeed;
-                total = row.Total.ToString();
+                total = row.Total;
             }
             else
             {
