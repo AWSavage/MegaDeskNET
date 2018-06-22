@@ -3,37 +3,37 @@ using System.IO;
 
 namespace MegaDesk
 {
-    class DeskQuote
+    public class DeskQuote
     {
-        public int[,] readTxtToArray()
-        {
-            int[,] shippingArray = new int[3, 3];
-            string[] file = File.ReadAllLines(@"rushOrderPrices.txt");
-            int temp = 0;
-            for (int r = 0; r < 3; r++)
-            {
-                for (int c = 0; c < 3; c++)
-                {
-                    shippingArray[r, c] = Int32.Parse(file[temp++]);
-                }
-            }
-            return shippingArray;
-        }
+        //public int[,] readTxtToArray()
+        //{
+        //    int[,] shippingArray = new int[3, 3];
+        //    string[] file = File.ReadAllLines(@"rushOrderPrices.txt");
+        //    int temp = 0;
+        //    for (int r = 0; r < 3; r++)
+        //    {
+        //        for (int c = 0; c < 3; c++)
+        //        {
+        //            shippingArray[r, c] = Int32.Parse(file[temp++]);
+        //        }
+        //    }
+        //    return shippingArray;
+        //}
 
-        public enum RushShippingChoice
-        {
-            Rush3Days,
-            Rush5Days,
-            Rush7Days,
-            Standard14Days
-        }
+        //public enum RushShippingChoice
+        //{
+        //    Rush3Days,
+        //    Rush5Days,
+        //    Rush7Days,
+        //    Standard14Days
+        //}
 
         // shipping speed strings
-        public static readonly string[] ShippingSpeeds = {
-            "Rush - 3 Days", // 0
-            "Rush - 5 Days", // 1
-            "Rush - 7 Days", // 2
-            "Standard - 14 Days" }; // 3
+        //public static readonly string[] ShippingSpeeds = {
+        //    "Rush - 3 Days", // 0
+        //    "Rush - 5 Days", // 1
+        //    "Rush - 7 Days", // 2
+        //    "Standard - 14 Days" }; // 3
 
         // price constants
         private const decimal BasePrice = 200.00M;
@@ -53,9 +53,10 @@ namespace MegaDesk
         // properties
         public Desk Desk { get; set; }
         public string CustomerName { get; set; }
-        public RushShippingChoice ShippingSpeed { get; set; }
+        //public RushShippingChoice ShippingSpeed { get; set; }
+        public string ShippingSpeed { get; set; }
         public DateTime QuoteDate { get; set; }
-        public decimal QuotePrice { get; set; }
+        public decimal Total { get; set; }
 
         // methods
         public decimal CalculateQuote()
@@ -66,7 +67,7 @@ namespace MegaDesk
             totalPrice += GetSurfaceMaterialPrice();
             totalPrice += GetShippingPrice();
 
-            QuotePrice = totalPrice;
+            Total = totalPrice;
 
             return totalPrice;
         }
@@ -99,7 +100,7 @@ namespace MegaDesk
 
         private decimal CalculatePriceOfDrawers()
         {
-            return DrawerPriceEach * Desk.NumberOfDrawers;
+            return DrawerPriceEach * Desk.Drawers;
         }
 
         private decimal CalculateSurfaceAreaPrice()
