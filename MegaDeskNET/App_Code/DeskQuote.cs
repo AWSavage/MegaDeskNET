@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MegaDeskNET
+namespace MegaDesk
 {
     public class DeskQuote
     {
